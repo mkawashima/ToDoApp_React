@@ -3,14 +3,8 @@ import "./styles.css";
 
 export const App = () => {
   const [todoText, setTodoText] = useState("");
-  const [incompleteTodos, setIncompleteTodos] = useState([
-    "ああああああ",
-    "いいいいいいい"
-  ]);
-  const [completeTodos, setCompleteTodos] = useState([
-    "カカかっか",
-    "さささささっっっっっっささ"
-  ]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
+  const [completeTodos, setCompleteTodos] = useState([]);
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const onClickAdd = () => {
     if (todoText === "") return;
@@ -27,6 +21,13 @@ export const App = () => {
     const newIncompleteTodos = [...incompleteTodos];
     const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
     newIncompleteTodos.splice(index, 1);
+    setIncompleteTodos(newIncompleteTodos);
+    setCompleteTodos(newCompleteTodos);
+  };
+  const onClickBack = (index) => {
+    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]];
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1);
     setIncompleteTodos(newIncompleteTodos);
     setCompleteTodos(newCompleteTodos);
   };
@@ -70,7 +71,7 @@ export const App = () => {
               <li key={index} className="list-row">
                 <div className="list-content">
                   <p>{todo}</p>
-                  <button>戻す</button>
+                  <button onClick={() => onClickBack(index)}>戻す</button>
                 </div>
               </li>
             );
